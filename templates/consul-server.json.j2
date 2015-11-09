@@ -2,7 +2,7 @@
   "data_dir": "{{ consul.data_dir | default('/tmp/consul')}}",
   "datacenter": "{{ consul.datacenter | default('dc1')}}",
   "enable_syslog": true,
-  "encrypt": "2M2aASKoKGek05TjpHczuw==",
+  "encrypt": "{{ consul.encrypt_key }}",
   "log_level": "{{  consul.log_level | default('info')}}",
   "node_name": "{{ consul.node_name | default(inventory_hostname)}}",
   "server": true,
