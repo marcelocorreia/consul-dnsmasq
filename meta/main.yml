@@ -1,0 +1,20 @@
+# file: oracle-jdk/meta/main.yml
+
+galaxy_info:
+  author: Marcelo Correia
+  company: BulletProof
+  description: "Install Hashicorp's Consul"
+  min_ansible_version: 1.4
+  license: MIT
+  platforms:
+  - name: Debian
+    versions:
+    - all
+  - name: Ubuntu
+    versions:
+    - all
+  categories:
+  - system
+  - development
+
+dependencies: []
