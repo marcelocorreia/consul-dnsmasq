@@ -9,36 +9,25 @@
     arch: darwin_amd64
   when: ansible_system == "Darwin"
 
-# - name: Sets Consul run_mode -> bootstrap
-#   set_fact:
-#     server_mode: true
-#     run_mode: bootstrap
-#   when: "'consul-servers' in {{ group_names }}"
-
-# - name: Sets Consul run_mode -> server
-#   set_fact:
-#     server_mode: true
-#     run_mode: server
-#   when: "'consul-servers' in {{ group_names }}"
-#
-# - name: Sets Consul run_mode -> client
-#   set_fact:
-#     server_mode: false
-#     run_mode: client
-#   when: "'consul-client' in {{ group_names }}"
-
-# - name: Sets Consul run_mode -> client
-#   set_fact:
-#     server_mode: false
-#     run_mode: client
-#     bootstrap_server_ip:
-#   when: "'consul-client' in {{ group_names }}"
+- name: Setup dnsmasq config file
+  template:
+    src="../templates/dnsmasq-10-consul.j2"
+    dest="{{ dnsmasq.config_file }}"
+  sudo: yes
+  tags:
+    - dnsmasq
+    - consul
+    - install
+    - config
 
 - name: Ensure consul group exists
   group:
     name=consul
     state=present
   sudo: yes
+  tags:
+    - setup
+    - consul
 
 - name: Ensure consul user exists
   user:
@@ -112,6 +101,10 @@
     owner={{ consul.user }}
     group={{ consul.group }}
   sudo: yes
+  tags:
+    - ui
+    - consul
+    - install
 
 - name: Fix permissions on files (Workaround while waiting for 2.0)
   file: path={{ install.dir }}/{{ item }}
@@ -126,8 +119,6 @@
     - consul
     - install
     - workaround
-
-
 
 - name: Setup consul config @ bootstrap box
   when: "'consul-bootstrap' in {{ group_names }}"
@@ -184,17 +175,6 @@
     - setup
     - config
 
-- name: Setup dnsmasq config file
-  template:
-    src="../templates/dnsmasq-10-consul.j2"
-    dest="{{ dnsmasq.config_file }}"
-  sudo: yes
-  tags:
-    - dnsmasq
-    - consul
-    - install
-    - config
-
 - name: Setup dnsmasq and consul as service
   service:
     name="{{ item }}"
@@ -207,4 +187,19 @@
     - config
   with_items:
     - dnsmasq
-    # - consul
+    - consul
+    - setup
+
+- name: Deploy Consul Service Definition
+  template:
+    src="{{ item.path }}"
+    dest="{{ consul.config.dir }}"
+    force=yes
+    owner={{ consul.user }}
+    group={{ consul.group }}
+  with_items: consul_services
+  notify: restart consul
+  tags:
+    - service
+    - consul
+    - config
