@@ -1,7 +1,6 @@
 # consul-dnsmasq
 
-Installs and Configures [Hasicorp's Consul] (https://consulproject.io)
-and DNSMasq.
+Installs and Configures [Hasicorp's Consul] (https://consulproject.io) cluster with DNSMasq.
 
 ## Inventories
 
@@ -54,9 +53,8 @@ consul_encrypt_key: 2M2aASKoKGek05TjpHcsuw==
 
     roles:
       - { role: marcelocorreia.apt, tags: ['install','apt'], sudo: true, when: "ansible_system == 'Linux'"}
-      - { role: marcelocorreia.nomad-install, tags: ['install','hashicorp','nomad']}
       - { role: marcelocorreia.consul-dnsmasq, tags: ['install','hashicorp','consul', 'dnsmasq','config']}
-      - { role: HanXHX.nginx, tags: ['install','nginx'], sudo: true}
+
 
 
     vars_files:

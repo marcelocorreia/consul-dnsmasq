@@ -3,7 +3,7 @@
 galaxy_info:
   author: Marcelo Correia
   company: BulletProof
-  description: "Install Hashicorp's Consul"
+  description: "Installs and Configures Hasicorp's Consul cluster with DNSMasq."
   min_ansible_version: 1.4
   license: MIT
   platforms:
