@@ -4,10 +4,8 @@ Installs and Configures [Hasicorp's Consul] (https://consulproject.io)
 and DNSMasq.
 
 ## Inventories
-==============
 
 ```
-
 [consul-servers]
 consulServer1.local
 consulServer2.local
@@ -23,12 +21,11 @@ consulClient2.local
 consulClient3.local
 consulClient4.local
 consulClient5.local
-
 ```
 
 ## Role Variables
-```yml
 
+```yml
 consul_datacenter: batcave
 consul_uid: 1050
 consul_user: consul
@@ -44,11 +41,9 @@ consul_encrypt_key: 2M2aASKoKGek05TjpHcsuw==
 
 ```
 
+## Example Playbook
 
-Example Playbook
-----------------
 ```yml
-
 ---
   - hosts:
       - consul-bootstrap
@@ -80,7 +75,6 @@ Example Playbook
       consul_ui_dir: /var/consul/ui
       consul_version: 0.5.2
       consul_encrypt_key: 2M2aASKoKGek05TjpHczuw==
-
 ```
 
 License
