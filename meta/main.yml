@@ -17,4 +17,5 @@ galaxy_info:
   - system
   - development
 
-dependencies: []
+dependencies:
+  - { role: marcelocorreia.apt, tags: ['apt'], sudo: true }

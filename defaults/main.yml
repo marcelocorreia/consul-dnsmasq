@@ -1,20 +1,14 @@
 ---
-app:
-  name: consul
-  version: 0.5.2
-
-install:
-  dir : /usr/local/bin
-  download_location: https://dl.bintray.com/mitchellh/consul
-
-  file_list:
-    - consul
-
 dnsmasq:
   config_file: "/etc/dnsmasq.d/10-consul"
 
-
 consul:
+  install:
+    dir : /usr/local/bin
+    download_location: https://dl.bintray.com/mitchellh/consul
+    force_download: "{{ consul_force_download | default(false) }}"
+    file_list:
+      - consul
   datacenter: "{{ consul_datacenter | default('dc1') }}"
   group: "{{ consul_group | default('consul') }}"
   iface: "{{ consul_iface | default('eth0') }}"
@@ -25,7 +19,7 @@ consul:
   ui_dir: "{{ consul_ui_dir | default( '/tmp/dist' ) }}"
   uid: "{{ consul_uid | default(1050) }}"
   user: "{{ consul_user | default('consul') }}"
-  version: "{{ app.version }}"
+  version: "{{ consul_version }}"
   encrypt_key: "{{ consul_encrypt_key }}"
   dirs:
     - "/etc/consul.d"

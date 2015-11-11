@@ -65,7 +65,7 @@
     url="{{ item.url }}"
     dest="{{ item.dest }}"
     mode=0755
-    force={{ install.force_download | default(false)}}
+    force="{{ consul.install.force_download }}"
   sudo: no
   tags:
     - hashicorp
@@ -73,8 +73,8 @@
     - install
     - download
   with_items:
-    - {"url" : "{{ install.download_location}}/{{ app.version }}_{{ arch }}.zip" , "dest": "/tmp/{{ app.version }}_{{ arch }}.zip" }
-    - {"url" : "{{ install.download_location}}/{{ app.version }}_web_ui.zip" , "dest": "/tmp/{{ app.version }}_web_ui.zip" }
+    - {"url" : "{{ consul.install.download_location }}/{{ consul.version }}_{{ arch }}.zip" , "dest": "/tmp/{{ consul.version }}_{{ arch }}.zip" }
+    - {"url" : "{{ consul.install.download_location }}/{{ consul.version }}_web_ui.zip" , "dest": "/tmp/{{ consul.version }}_web_ui.zip" }
 
 - name: Unpacks to location
   unarchive: >
@@ -90,8 +90,8 @@
     - install
     - unarchive
   with_items:
-    - { "url" : "/tmp/{{ app.version }}_{{ arch }}.zip", "dest" : "{{ install.dir }}" }
-    - { "url" : "/tmp/{{ app.version }}_web_ui.zip", "dest" : "/tmp/consul_ui" }
+    - { "url" : "/tmp/{{ consul.version }}_{{ arch }}.zip", "dest" : "{{ consul.install.dir }}" }
+    - { "url" : "/tmp/{{ consul.version }}_web_ui.zip", "dest" : "/tmp/consul_ui" }
 
 - name: Moves UI to location
   file:
@@ -107,13 +107,13 @@
     - install
 
 - name: Fix permissions on files (Workaround while waiting for 2.0)
-  file: path={{ install.dir }}/{{ item }}
-    owner={{ consul.user | default('root') }}
-    group={{ consul.user | default('staff') }}
+  file: path="{{ consul.install.dir }}/{{ item }}"
+    owner="{{ consul.user | default('root') }}"
+    group="{{ consul.user | default('staff') }}"
     mode=755
   sudo: yes
   with_items:
-    - "{{ install.file_list }}"
+    - "{{ consul.install.file_list }}"
   tags:
     - hashicorp
     - consul
@@ -188,18 +188,17 @@
   with_items:
     - dnsmasq
     - consul
-    - setup
 
-- name: Deploy Consul Service Definition
-  template:
-    src="{{ item.path }}"
-    dest="{{ consul.config.dir }}"
-    force=yes
-    owner={{ consul.user }}
-    group={{ consul.group }}
-  with_items: consul_services
-  notify: restart consul
-  tags:
-    - service
-    - consul
-    - config
+# - name: Deploy Consul Service Definition
+#   template:
+#     src="{{ item.path }}"
+#     dest="{{ consul.config.dir }}"
+#     force=yes
+#     owner={{ consul.user }}
+#     group={{ consul.group }}
+#   with_items: consul_services
+#   notify: restart consul
+#   tags:
+#     - service
+#     - consul
+#     - config
