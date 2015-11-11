@@ -25,6 +25,7 @@ consul:
     - "/etc/consul.d"
     - "/var/consul/data"
     - "/tmp/consul_ui"
+    - "/var/consul/ui"
   config:
     dir: "/etc/consul.d"
     service_file: "/etc/init/consul.conf"

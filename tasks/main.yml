@@ -94,12 +94,7 @@
     - { "url" : "/tmp/{{ consul.version }}_web_ui.zip", "dest" : "/tmp/consul_ui" }
 
 - name: Moves UI to location
-  file:
-    dest="{{ consul.ui_dir }}"
-    src="/tmp/consul_ui/dist"
-    state=link
-    owner={{ consul.user }}
-    group={{ consul.group }}
+  command: mv /tmp/consul_ui/dist/* "{{ consul.ui_dir }}/"
   sudo: yes
   tags:
     - ui
@@ -114,6 +109,22 @@
   sudo: yes
   with_items:
     - "{{ consul.install.file_list }}"
+  tags:
+    - hashicorp
+    - consul
+    - install
+    - workaround
+
+- name: Fix permissions on dirs (Workaround while waiting for 2.0)
+  file: path="{{ consul.install.dir }}/{{ item }}"
+    owner="{{ consul.user | default('root') }}"
+    group="{{ consul.user | default('staff') }}"
+    mode=755
+    recurse=true
+    state=directory
+  sudo: yes
+  with_items:
+    - "{{ consul.ui_dir }}"
   tags:
     - hashicorp
     - consul
