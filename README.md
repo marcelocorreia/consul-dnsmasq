@@ -26,7 +26,7 @@ consulClient5.local
 ## Role Variables
 
 ```yml
-consul_datacenter: batcave
+consul_datacenter: central
 consul_uid: 1050
 consul_user: consul
 consul_group: consul
@@ -79,7 +79,7 @@ consul_encrypt_key: 2M2aASKoKGek05TjpHcsuw==
 
 ## Testing
 
-You can test win this small Vagrant cluster
+Using this small Vagrant cluster
 
 ```Vagrantfile
 # -*- mode: ruby -*-
