@@ -183,6 +183,6 @@ Author Information
 
 Some useful stuff at:
 - [https://github.com/marcelocorreia](https://github.com/marcelocorreia)
--  [https://galaxy.ansible.com/list#/users/15516](https://galaxy.ansible.com/list#/users/15516)
--  [https://hub.docker.com/u/marcelocorreia/](https://hub.docker.com/u/marcelocorreia/)
--  Any issues, pull-request are welcome
+- [https://galaxy.ansible.com/list#/users/15516](https://galaxy.ansible.com/list#/users/15516)
+- [https://hub.docker.com/u/marcelocorreia/](https://hub.docker.com/u/marcelocorreia/)
+- Any issues, pull-request are welcome
