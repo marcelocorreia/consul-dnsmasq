@@ -96,7 +96,7 @@
 - name: Moves UI to location
   file:
     src="/var/consul/ui_src/dist"
-    dest="{{ consul.ui_dir }}/"
+    dest="{{ consul.ui_dir }}"
     state=link
   sudo: yes
   tags:
