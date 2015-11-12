@@ -32,7 +32,7 @@
 - name: Ensure consul user exists
   user:
     name="consul"
-    group="consul"
+    groups="consul,syslog"
     uid="1050"
     generate_ssh_key=true
     ssh_key_bits=2048
