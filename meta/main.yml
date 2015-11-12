@@ -14,9 +14,10 @@ galaxy_info:
     versions:
     - all
   categories:
-  - system
-  - development
-  - consul
+  - System
+  - Development
+  - Consul
+  - DNSMasq
 
 dependencies:
   - { role: marcelocorreia.apt, tags: ['apt'], sudo: true }
