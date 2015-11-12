@@ -16,6 +16,7 @@ galaxy_info:
   categories:
   - system
   - development
+  - consul
 
 dependencies:
   - { role: marcelocorreia.apt, tags: ['apt'], sudo: true }
