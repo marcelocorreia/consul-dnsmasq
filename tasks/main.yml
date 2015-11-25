@@ -66,6 +66,7 @@
     dest="{{ item.dest }}"
     mode=0755
     force="{{ consul.install.force_download }}"
+    validate_certs=no
   sudo: yes
   tags:
     - hashicorp
@@ -73,8 +74,8 @@
     - install
     - download
   with_items:
-    - {"url" : "{{ consul.install.download_location }}/{{ consul.version }}_{{ arch }}.zip" , "dest": "/tmp/{{ consul.version }}_{{ arch }}.zip" }
-    - {"url" : "{{ consul.install.download_location }}/{{ consul.version }}_web_ui.zip" , "dest": "/var/consul/{{ consul.version }}_web_ui.zip" }
+    - {"url" : "{{ consul.install.download_location }}/consul_{{ consul.version }}_{{ arch }}.zip" , "dest": "/tmp/consul_{{ consul.version }}_{{ arch }}.zip" }
+    - {"url" : "{{ consul.install.download_location }}/consul_{{ consul.version }}_web_ui.zip" , "dest": "/var/consul/consul_{{ consul.version }}_web_ui.zip" }
 
 - name: Unpacks to location
   unarchive: >
@@ -90,8 +91,8 @@
     - install
     - unarchive
   with_items:
-    - { "url" : "/tmp/{{ consul.version }}_{{ arch }}.zip", "dest" : "{{ consul.install.dir }}" }
-    - { "url" : "/tmp/{{ consul.version }}_web_ui.zip", "dest" : "/var/consul/ui_src" }
+    - { "url" : "/tmp/consul_{{ consul.version }}_{{ arch }}.zip", "dest" : "{{ consul.install.dir }}" }
+    - { "url" : "/tmp/consul_{{ consul.version }}_web_ui.zip", "dest" : "/var/consul/ui_src" }
 
 - name: Moves UI to location
   file:
@@ -203,17 +204,3 @@
   with_items:
     - dnsmasq
     - consul
-
-# - name: Deploy Consul Service Definition
-#   template:
-#     src="{{ item.path }}"
-#     dest="{{ consul.config.dir }}"
-#     force=yes
-#     owner={{ consul.user }}
-#     group={{ consul.group }}
-#   with_items: consul_services
-#   notify: restart consul
-#   tags:
-#     - service
-#     - consul
-#     - config
