@@ -113,7 +113,6 @@
   sudo: yes
   with_items:
     - "{{ consul.install.file_list }}"
-    - "/var/consul/ui_dir"
   tags:
     - hashicorp
     - consul
