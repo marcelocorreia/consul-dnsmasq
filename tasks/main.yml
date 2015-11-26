@@ -74,8 +74,8 @@
     - install
     - download
   with_items:
-    - {"url" : "{{ consul.install.download_location }}/consul_{{ consul.version }}_{{ arch }}.zip" , "dest": "/tmp/consul_{{ consul.version }}_{{ arch }}.zip" }
-    - {"url" : "{{ consul.install.download_location }}/consul_{{ consul.version }}_web_ui.zip" , "dest": "/var/consul/consul_{{ consul.version }}_web_ui.zip" }
+    - {"url" : "{{ consul.install.download_location }}/{{ consul.version }}/consul_{{ consul.version }}_{{ arch }}.zip" , "dest": "/tmp/consul_{{ consul.version }}_{{ arch }}.zip" }
+    - {"url" : "{{ consul.install.download_location }}/{{ consul.version }}/consul_{{ consul.version }}_web_ui.zip" , "dest": "/var/consul/consul_{{ consul.version }}_web_ui.zip" }
 
 - name: Unpacks to location
   unarchive: >
