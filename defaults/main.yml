@@ -5,7 +5,7 @@ dnsmasq:
 consul:
   install:
     dir : /usr/local/bin
-    download_location: https://dl.bintray.com/mitchellh/consul
+    download_location: https://releases.hashicorp.com/consul
     force_download: "{{ consul_force_download | default(false) }}"
     file_list:
       - consul
