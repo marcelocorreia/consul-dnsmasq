@@ -92,7 +92,7 @@
     - unarchive
   with_items:
     - { "url" : "/tmp/consul_{{ consul.version }}_{{ arch }}.zip", "dest" : "{{ consul.install.dir }}" }
-    - { "url" : "/tmp/consul_{{ consul.version }}_web_ui.zip", "dest" : "/var/consul/ui_src" }
+    - { "url" : "/var/consul/consul_{{ consul.version }}_web_ui.zip", "dest" : "/var/consul/ui_src" }
 
 - name: Moves UI to location
   file:
