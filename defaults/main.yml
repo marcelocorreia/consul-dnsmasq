@@ -30,3 +30,11 @@ consul:
     dir: "/etc/consul.d"
     service_file: "/etc/init/consul.conf"
   data_dir: "/var/consul/data"
+
+consul_template:
+  version: 0.11.0
+  install:
+    download_location: https://github.com/hashicorp/consul-template/releases/download
+    force_download: "{{ consul_force_download | default(false) }}"
+    file_list:
+      - consul-template

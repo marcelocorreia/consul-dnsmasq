@@ -76,6 +76,7 @@
   with_items:
     - {"url" : "{{ consul.install.download_location }}/{{ consul.version }}/consul_{{ consul.version }}_{{ arch }}.zip" , "dest": "/tmp/consul_{{ consul.version }}_{{ arch }}.zip" }
     - {"url" : "{{ consul.install.download_location }}/{{ consul.version }}/consul_{{ consul.version }}_web_ui.zip" , "dest": "/var/consul/consul_{{ consul.version }}_web_ui.zip" }
+    - {"url" : "{{ consul.template.install.download_location }}/v{{ consul_template.version }}/consul_template_{{ consul.version }}_{{ arch }}.zip" , "dest": "/tmp/consul_template_{{ consul.version }}_{{ arch }}.zip" }
 
 - name: Unpacks to location
   unarchive: >
@@ -93,6 +94,7 @@
   with_items:
     - { "url" : "/tmp/consul_{{ consul.version }}_{{ arch }}.zip", "dest" : "{{ consul.install.dir }}" }
     - { "url" : "/var/consul/consul_{{ consul.version }}_web_ui.zip", "dest" : "/var/consul/ui_src" }
+    - { "url" : "/tmp/consul_{{ consul.version }}_{{ arch }}.zip", "dest" : "{{ consul.install.dir }}" }
 
 - name: Moves UI to location
   file:
@@ -113,6 +115,7 @@
   sudo: yes
   with_items:
     - "{{ consul.install.file_list }}"
+    - "{{ consul-template.install.file_list }}"
   tags:
     - hashicorp
     - consul
