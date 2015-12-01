@@ -115,7 +115,7 @@
   sudo: yes
   with_items:
     - "{{ consul.install.file_list }}"
-    - "{{ consul-template.install.file_list }}"
+
   tags:
     - hashicorp
     - consul
