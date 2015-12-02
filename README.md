@@ -2,6 +2,8 @@
 
 Installs and Configures [Hasicorp's Consul] (https://consulproject.io) cluster with DNSMasq.
 
+
+
 ## Inventories
 
 ```
@@ -20,6 +22,12 @@ consulClient2.local
 consulClient3.local
 consulClient4.local
 consulClient5.local
+```
+
+### Encryption Key Generation
+
+```
+$ consul keygen
 ```
 
 ## Role Variables
