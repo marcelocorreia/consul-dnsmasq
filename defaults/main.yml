@@ -16,7 +16,7 @@ consul:
   log_level: "{{ consul_log_level | default('info') }}"
   port: "{{ consul_port | default(8600) }}"
   suffix: "{{ consul_suffix | default('consul') }}"
-  ui_dir: "{{ consul_ui_dir | default( '/var/consul/ui_src/dist' ) }}"
+  ui_dir: "{{ consul_ui_dir | default( '/var/consul/ui' ) }}"
   uid: "{{ consul_uid | default(1050) }}"
   user: "{{ consul_user | default('consul') }}"
   version: "{{ consul_version }}"
