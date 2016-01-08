@@ -4,7 +4,7 @@ Installs and Configures [Hasicorp's Consul] (https://consulproject.io) cluster w
 
 
 
-## Inventories
+## Inventory
 
 ```
 [consul-servers]
