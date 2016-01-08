@@ -101,6 +101,7 @@
     src="/var/consul/ui_src/dist"
     dest="{{ consul.ui_dir }}"
     state=link
+    force=yes
   sudo: yes
   tags:
     - ui
