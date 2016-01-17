@@ -3,13 +3,15 @@ dnsmasq:
   config_file: "/etc/dnsmasq.d/10-consul"
 
 consul:
+  node_name: "{{ consul.node_name | default(inventory_hostname) }}"
   install:
-    dir : /usr/local/bin
-    download_location: https://releases.hashicorp.com/consul
+    dir : "/usr/local/bin"
+    download_location: "https://releases.hashicorp.com/consul"
     force_download: "{{ consul_force_download | default(false) }}"
     file_list:
-      - consul
+      - "consul"
   datacenter: "{{ consul_datacenter | default('dc1') }}"
+  bootstrap_expect: "{{ consul_bootstrap_expect | default('1') }}"
   group: "{{ consul_group | default('consul') }}"
   iface: "{{ consul_iface | default('eth0') }}"
   ip: "{{ consul_ip | default('127.0.0.1') }}"
@@ -28,5 +30,5 @@ consul:
     - "/var/consul/ui_src"
   config:
     dir: "/etc/consul.d"
-    service_file: "/etc/init/consul.conf"
-  data_dir: "/var/consul/data"
+    service_file: "{{ consul_config_service_file | default('/etc/init/consul.conf') }}"
+  data_dir: "{{ consul_data_dir | default('/var/consul/data') }}"

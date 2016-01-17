@@ -1,12 +1,12 @@
 {
-  "data_dir": "{{ consul.data_dir | default('/tmp/consul')}}",
-  "datacenter": "{{ consul.datacenter | default('dc1')}}",
+  "data_dir": "{{ consul.data_dir }}",
+  "datacenter": "{{ consul.datacenter }}",
   "enable_syslog": true,
   "encrypt": "{{ consul.encrypt_key }}",
-  "log_level": "{{  consul.log_level | default('info')}}",
-  "node_name": "{{ consul.node_name | default(inventory_hostname)}}",
+  "log_level": "{{  consul.log_level }}",
+  "node_name": "{{ consul.node_name }}",
   "server": false,
   "start_join": [{% for host in groups['consul-bootstrap'] %}"{{ hostvars[host]["ansible_" ~ consul.iface]['ipv4']['address'] }}"{% if not loop.last %},{% endif %}{% endfor %}],
-  "ui_dir": "{{ consul.ui_dir | default('/tmp/dist')}}",
+  "ui_dir": "{{ consul.ui_dir }}",
   "bind_addr": "0.0.0.0"
 }
