@@ -95,10 +95,9 @@
     - { "url" : "/tmp/consul_{{ consul.version }}_{{ arch }}.zip", "dest" : "{{ consul.install.dir }}" }
     - { "url" : "/var/consul/consul_{{ consul.version }}_web_ui.zip", "dest" : "/var/consul/ui_src" }
 
-
-- name: Moves UI to location
+- name: Symlinks ui
   file:
-    src="/var/consul/ui_src/dist"
+    src="/var/consul/ui_src"
     dest="{{ consul.ui_dir }}"
     state=link
     force=yes
@@ -207,3 +206,13 @@
   with_items:
     - dnsmasq
     - consul
+
+- name: Adds NGINX Virtual host
+  template:
+    src="../templates/nginx-consul.j2"
+    dest="/etc/nginx/sites-enabled/consul"
+  sudo: yes
+  tags:
+    - consul
+    - install
+    - config

@@ -3,7 +3,6 @@ dnsmasq:
   config_file: "/etc/dnsmasq.d/10-consul"
 
 consul:
-  node_name: "{{ consul.node_name | default(inventory_hostname) }}"
   install:
     dir : "/usr/local/bin"
     download_location: "https://releases.hashicorp.com/consul"
