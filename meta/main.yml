@@ -19,6 +19,6 @@ galaxy_info:
   - Consul
   - DNSMasq
 
-dependencies:
-  - { role: marcelocorreia.apt }
-  - { role: HanXHX.nginx }
+dependencies:[]
+#  - { role: marcelocorreia.apt }
+#  - { role: HanXHX.nginx }
