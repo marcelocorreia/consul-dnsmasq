@@ -1,27 +1,28 @@
 # consul-dnsmasq
 
-Installs and Configures [Hasicorp's Consul] (https://consulproject.io) cluster with DNSMasq.
+Installs and Configures [Hashicorp's Consul] (https://consulproject.io) cluster with DNSMasq and Web UI.
 
+It uses ansible inventory to configure the whole cluster. 
 
-
-## Inventory
+## Inventory Example
 
 ```
-[consul-servers]
-consulServer1.local
-consulServer2.local
-consulServer3.local
+bootstrap[1:2].local ansible_connection=ssh ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/key.pem
+server[1:3].local ansible_connection=ssh ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/key.pem
+client[1:13].local ansible_connection=ssh ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/key.pem
+anotherclient.com ansible_connection=ssh ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/key.pem
 
 [consul-bootstrap]
-consulBootstrap1.local
-consulBootstrap2.local
+bootstrap[1:2].local
+
+[consul-servers]
+server[1:3].local
 
 [consul-clients]
-consulClient1.local
-consulClient2.local
-consulClient3.local
-consulClient4.local
-consulClient5.local
+worker[1:13].local
+anotherclient.local
+wholebunchofclients[1:50].whatever.io
+
 ```
 
 ### Encryption Key Generation
@@ -60,7 +61,6 @@ consul_encrypt_key: 2M2aASKoKGek05TjpHcsuw==
     gather_facts: true
 
     roles:
-      - { role: marcelocorreia.apt, tags: ['install','apt'], sudo: true, when: "ansible_system == 'Linux'"}
       - { role: marcelocorreia.consul-dnsmasq, tags: ['install','hashicorp','consul', 'dnsmasq','config']}
 
 
@@ -69,7 +69,7 @@ consul_encrypt_key: 2M2aASKoKGek05TjpHcsuw==
       - /some_path/vars/consul.yml
 
     vars:
-      consul_datacenter: batcave
+      consul_datacenter: dc1
       consul_uid: 1050
       consul_user: consul
       consul_group: consul

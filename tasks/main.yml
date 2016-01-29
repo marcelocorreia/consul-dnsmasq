@@ -74,9 +74,7 @@
     - install
     - download
   with_items:
-    - {"url" : "{{ consul.install.download_location }}/{{ consul.version }}/consul_{{ consul.version }}_{{ arch }}.zip" , "dest": "/tmp/consul_{{ consul.version }}_{{ arch }}.zip" }
     - {"url" : "{{ consul.install.download_location }}/{{ consul.version }}/consul_{{ consul.version }}_web_ui.zip" , "dest": "/var/consul/consul_{{ consul.version }}_web_ui.zip" }
-
 
 - name: Unpacks to location
   unarchive: >
@@ -92,7 +90,6 @@
     - install
     - unarchive
   with_items:
-    - { "url" : "/tmp/consul_{{ consul.version }}_{{ arch }}.zip", "dest" : "{{ consul.install.dir }}" }
     - { "url" : "/var/consul/consul_{{ consul.version }}_web_ui.zip", "dest" : "/var/consul/ui_src" }
 
 - name: Symlinks ui
@@ -210,10 +207,33 @@
 - name: Adds NGINX Virtual host
   template:
     src="../templates/nginx-consul.j2"
-    dest="/etc/nginx/sites-enabled/consul"
+    dest="/etc/nginx/sites-available/consul"
   sudo: yes
   tags:
     - consul
     - install
     - config
+    - nginx
 
+- name: Configure NGINX
+  template:
+    src="../templates/nginx.conf.j2"
+    dest="/etc/nginx/nginx.conf"
+  sudo: yes
+  tags:
+    - consul
+    - install
+    - nginx
+
+- name: Enable Consul VHost
+  file:
+    src="/etc/nginx/sites-available/consul"
+    dest="/etc/nginx/sites-enabled/consul"
+    state=link
+    force=yes
+  sudo: yes
+  tags:
+    - ui
+    - consul
+    - install
+    - nginx

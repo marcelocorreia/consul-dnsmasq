@@ -1,1 +1,0 @@
-[{% for host in groups['consul-bootstrap'] %}{% if hostvars[host]['inventory_hostname'] != inventory_hostname %} "{{ hostvars[host]['inventory_hostname'] }}"{% endif %}{% if not loop.last %},{% endif %}{% endfor %}]
