@@ -5,7 +5,7 @@
   "enable_syslog": true,
   {% if consul_encrypt_key%}
   "encrypt": "{{ consul.encrypt_key }}",
-  {% elif consul_encrypt_key %}
+  {% endif consul_encrypt_key %}
   "log_level": "{{  consul.log_level }}",
   "node_name": "{{ inventory_hostname }}",
   "server": true,
