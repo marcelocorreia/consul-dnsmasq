@@ -2,7 +2,7 @@
 
 Installs and Configures [Hashicorp's Consul] (https://consulproject.io) cluster with DNSMasq and Web UI.
 
-It uses ansible inventory to configure the whole cluster. 
+It uses ansible inventory and playbook for flexibility to configure the whole cluster. 
 
 ## Inventory Example
 
