@@ -208,6 +208,7 @@
   template:
     src="../templates/nginx-consul.j2"
     dest="/etc/nginx/sites-available/consul"
+  when: "'consul-bootstrap' in {{ group_names }}"
   sudo: yes
   tags:
     - consul
@@ -219,6 +220,7 @@
   template:
     src="../templates/nginx.conf.j2"
     dest="/etc/nginx/nginx.conf"
+  when: "'consul-bootstrap' in {{ group_names }}"
   sudo: yes
   tags:
     - consul
@@ -231,6 +233,7 @@
     dest="/etc/nginx/sites-enabled/consul"
     state=link
     force=yes
+  when: "'consul-bootstrap' in {{ group_names }}"
   sudo: yes
   tags:
     - ui
