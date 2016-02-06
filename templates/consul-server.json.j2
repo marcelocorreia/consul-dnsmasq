@@ -2,7 +2,7 @@
   "data_dir": "{{ consul.data_dir }}",
   "datacenter": "{{ consul.datacenter }}",
   "enable_syslog": true,
-  {% if consul_encrypt_key%}
+  {% if consul.encrypt_key != 'none' %}
   "encrypt": "{{ consul.encrypt_key }}",
   {% endif %}
   "log_level": "{{  consul.log_level }}",

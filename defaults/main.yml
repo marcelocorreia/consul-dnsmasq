@@ -21,7 +21,7 @@ consul:
   user: "{{ consul_user | default('consul') }}"
   group: "{{ consul_group | default('consul') }}"
   version: "{{ consul_version }}"
-  encrypt_key: "{{ consul_encrypt_key }}"
+  encrypt_key: "{{ consul_encrypt_key | default('none') }}"
   dirs:
     - "/etc/consul.d"
     - "/var/consul/data"
