@@ -9,5 +9,6 @@
   "log_level": "{{  consul.log_level }}",
   "node_name": "{{ inventory_hostname }}",
   "server": true,
-  "ui_dir": "{{ consul.ui_dir }}"
+  "ui_dir": "{{ consul.ui_dir }}",
+  "bind_addr": "{{ hostvars[inventory_hostname][ethernet]['ipv4']['address'] }}"
 }
