@@ -1,7 +1,7 @@
 ---
 - name: Sets eth0 to bind
   set_fact:
-  ethernet: ansible_eth0
+    ethernet: ansible_eth0
   when: consul.iface == "eth0"
 
 - name: Sets eth1 to bind
