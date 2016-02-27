@@ -252,3 +252,9 @@
     - consul
     - install
     - nginx
+
+- name: Restart Nginx
+  service: name=nginx state=restarted
+  tags:
+    - nginx
+    - service
