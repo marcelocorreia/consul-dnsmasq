@@ -11,7 +11,7 @@ consul:
     file_list:
       - "consul"
   datacenter: "{{ consul_datacenter | default('dc1') }}"
-  bootstrap_expect: "{{ consul_bootstrap_expect | default('1') }}"
+  bootstrap_expect: "{{ consul_bootstrap_expect | default('none') }}"
   iface: "{{ consul_iface | default('eth0') }}"
   ip: "{{ consul_ip | default('127.0.0.1') }}"
   log_level: "{{ consul_log_level | default('info') }}"

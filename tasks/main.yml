@@ -253,8 +253,18 @@
     - install
     - nginx
 
-- name: Restart consul
+
+
+- name: Restart consul boostrap
   service: name=consul state=restarted
+  when: "'consul-bootstrap' in {{ group_names }}"
+  tags:
+    - consul
+    - service
+
+- name: Restart consul servers and clients
+  service: name=consul state=restarted
+  when: "'consul-bootstrap' not in {{ group_names }}"
   tags:
     - consul
     - service
