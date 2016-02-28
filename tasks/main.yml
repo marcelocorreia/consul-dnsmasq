@@ -245,13 +245,19 @@
     dest="/etc/nginx/sites-enabled/consul"
     state=link
     force=yes
-  when: "'consul-bootstrap' in {{ group_names }}"
+  when: "'consul-bootstrap' in {{ group_names }} or 'consul-servers' in {{ group_names }}"
   sudo: yes
   tags:
     - ui
     - consul
     - install
     - nginx
+
+- name: Restart consul
+  service: name=consul state=restarted
+  tags:
+    - consul
+    - service
 
 - name: Restart Nginx
   service: name=nginx state=restarted
