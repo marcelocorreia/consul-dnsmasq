@@ -219,7 +219,7 @@
     src="../templates/nginx-consul.j2"
     dest="/etc/nginx/sites-available/consul"
     force=yes
-  when: "'consul-bootstrap' in {{ group_names }}"
+  when: "'consul-bootstrap' in {{ group_names }} or 'consul-servers' in {{ group_names }}"
   sudo: yes
   tags:
     - consul
