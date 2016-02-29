@@ -4,6 +4,16 @@ Installs and Configures [Hashicorp's Consul] (https://consulproject.io) cluster 
 
 It uses ansible inventory and playbook for flexibility to configure the whole cluster. 
 
+> INFO: This role relies heavily in the Ansible Inventory file, it assumes that each node 
+> is already created with DNS names assigned to them. I uses the names declared in the
+> inventory file to generate the configuration to be pushed, still getting the head around Ansible 
+> best practices, any feedback is appreciated.
+> The role assumes that NGINX and DNSMasq is installed using the default Ubuntu packages and 
+> expects Consul to be installed and available PATH, usually /usr/local/bin/. We recommend use the 
+> role marcelocorreia.hashicorp-pack and marcelocorreia.apt to install these dependencies, but you're 
+> free to use any other method.
+
+ 
 ## Inventory Example
 
 ```
