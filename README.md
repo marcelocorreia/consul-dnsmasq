@@ -71,9 +71,7 @@ consul_encrypt_key: 2M2aASKoKGek05TjpHcsuw==
     gather_facts: true
 
     roles:
-      - { role: marcelocorreia.consul-dnsmasq, tags: ['install','hashicorp','consul', 'dnsmasq','config']}
-
-
+      - marcelocorreia.consul-dnsmasq
 
     vars_files:
       - /some_path/vars/consul.yml

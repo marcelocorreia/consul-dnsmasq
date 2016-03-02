@@ -24,20 +24,12 @@
     src="../templates/dnsmasq-10-consul.j2"
     dest="{{ dnsmasq.config_file }}"
   sudo: yes
-  tags:
-    - dnsmasq
-    - consul
-    - install
-    - config
 
 - name: Ensure consul group exists
   group:
     name=consul
     state=present
   sudo: yes
-  tags:
-    - setup
-    - consul
 
 - name: Ensure consul user exists
   user:
@@ -48,11 +40,6 @@
     ssh_key_bits=2048
     ssh_key_file=".ssh/id_rsa"
   sudo: yes
-  tags:
-    - hashicorp
-    - consul
-    - install
-    - setup
 
 - name: Creates configuration directories
   file:
@@ -64,11 +51,6 @@
   sudo: yes
   with_items:
     - "{{ consul.dirs }}"
-  tags:
-    - hashicorp
-    - consul
-    - install
-    - setup
 
 - name: Downloads UI
   get_url: >
@@ -78,11 +60,7 @@
     force="{{ consul.install.force_download }}"
     validate_certs=no
   sudo: yes
-  tags:
-    - hashicorp
-    - consul
-    - install
-    - download
+
   with_items:
     - {"url" : "{{ consul.install.download_location }}/{{ consul.version }}/consul_{{ consul.version }}_web_ui.zip" , "dest": "/var/consul/consul_{{ consul.version }}_web_ui.zip" }
 
@@ -94,11 +72,7 @@
     mode=755
     creates=yes
   sudo: yes
-  tags:
-    - hashicorp
-    - consul
-    - install
-    - unarchive
+
   with_items:
     - { "url" : "/var/consul/consul_{{ consul.version }}_web_ui.zip", "dest" : "/var/consul/ui_src" }
 
@@ -109,10 +83,7 @@
     state=link
     force=yes
   sudo: yes
-  tags:
-    - ui
-    - consul
-    - install
+
 
 - name: Fix permissions on files (Workaround while waiting for 2.0)
   file: path="{{ consul.install.dir }}/{{ item }}"
@@ -122,12 +93,6 @@
   sudo: yes
   with_items:
     - "{{ consul.install.file_list }}"
-
-  tags:
-    - hashicorp
-    - consul
-    - install
-    - workaround
 
 - name: Fix permissions on dirs (Workaround while waiting for 2.0)
   file: path="{{ consul.install.dir }}/{{ item }}"
@@ -139,11 +104,6 @@
   sudo: yes
   with_items:
     - "{{ consul.ui_dir }}"
-  tags:
-    - hashicorp
-    - consul
-    - install
-    - workaround
 
 - name: Setup consul config @ bootstrap box
   when: "'consul-bootstrap' in {{ group_names }}"
@@ -155,10 +115,6 @@
     group={{ consul.group }}
   sudo: yes
   register: bootstrap_obj
-  tags:
-    - consul
-    - setup
-    - config
 
 - name: Setup consul config @  server boxes
   when: "'consul-servers' in {{ group_names }} and 'consul-bootstrap' not in {{ group_names }}"
@@ -169,10 +125,6 @@
     owner={{ consul.user }}
     group={{ consul.group }}
   sudo: yes
-  tags:
-    - consul
-    - setup
-    - config
 
 - name: Setup consul config @ client boxes
   when: "'consul-clients' in {{ group_names }}"
@@ -183,10 +135,7 @@
     group={{ consul.group }}
     owner={{ consul.user }}
   sudo: yes
-  tags:
-    - consul
-    - setup
-    - config
+
 
 - name: Setup consul service config file
   template:
@@ -195,21 +144,12 @@
     owner=root
     group=root
   sudo: yes
-  tags:
-    - consul
-    - setup
-    - config
 
 - name: Setup dnsmasq and consul as service
   service:
     name="{{ item }}"
     state=started
   sudo: yes
-  tags:
-    - dnsmasq
-    - service
-    - consul
-    - config
   with_items:
     - dnsmasq
     - consul
@@ -221,23 +161,6 @@
     force=yes
   when: "'consul-bootstrap' in {{ group_names }} or 'consul-servers' in {{ group_names }}"
   sudo: yes
-  tags:
-    - consul
-    - install
-    - config
-    - nginx
-
-- name: Configure NGINX
-  template:
-    src="../templates/nginx.conf.j2"
-    dest="/etc/nginx/nginx.conf"
-    force=yes
-  when: "'consul-bootstrap' in {{ group_names }}"
-  sudo: yes
-  tags:
-    - consul
-    - install
-    - nginx
 
 - name: Enable Consul VHost
   file:
@@ -247,30 +170,14 @@
     force=yes
   when: "'consul-bootstrap' in {{ group_names }} or 'consul-servers' in {{ group_names }}"
   sudo: yes
-  tags:
-    - ui
-    - consul
-    - install
-    - nginx
-
-
 
 - name: Restart consul boostrap
   service: name=consul state=restarted
   when: "'consul-bootstrap' in {{ group_names }}"
-  tags:
-    - consul
-    - service
 
 - name: Restart consul servers and clients
   service: name=consul state=restarted
   when: "'consul-bootstrap' not in {{ group_names }}"
-  tags:
-    - consul
-    - service
 
 - name: Restart Nginx
   service: name=nginx state=restarted
-  tags:
-    - nginx
-    - service
