@@ -10,5 +10,6 @@
   "server": true,
   "start_join": [{% for host in groups['consul-bootstrap'] %}"{{ hostvars[host]['inventory_hostname'] }}"{% if not loop.last %},{% endif %}{% endfor %}],
   "ui_dir": "{{ consul.ui_dir }}",
+  "rejoin": true,
   "bind_addr": "{{ hostvars[inventory_hostname][ethernet]['ipv4']['address'] }}"
 }
