@@ -3,7 +3,7 @@ dnsmasq:
   config_file: "/etc/dnsmasq.d/10-consul"
 
 consul:
-  nginx_redir_by_hostname: "{{ consul_nginx_redir_by_hostname | default('true') }}"
+  nginx_redir_by_hostname: "{{ consul_nginx_redir_by_hostname | default(false) }}"
   nginx_port: "{{ consul_nginx_port | default('80') }}"
   vhost_prefix: "{{ consul_vhost_prefix | default('consul') }}"
   install:
