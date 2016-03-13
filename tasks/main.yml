@@ -59,7 +59,7 @@
     mode=0755
     force="{{ consul.install.force_download }}"
     validate_certs=no
-  when: "consul-servers' in {{ group_names }}"
+  when: "'consul-servers' in {{ group_names }}"
   sudo: yes
 
   with_items:
@@ -72,7 +72,7 @@
     copy=no
     mode=755
     creates=yes
-  when: "consul-servers' in {{ group_names }}"
+  when: "'consul-servers' in {{ group_names }}"
   sudo: yes
 
   with_items:
@@ -84,7 +84,7 @@
     dest="{{ consul.ui_dir }}"
     state=link
     force=yes
-  when: "consul-servers' in {{ group_names }}"
+  when: "'consul-servers' in {{ group_names }}"
   sudo: yes
 
 
@@ -104,7 +104,7 @@
     mode=755
     recurse=true
     state=directory
-  when: "consul-servers' in {{ group_names }}"
+  when: "'consul-servers' in {{ group_names }}"
   sudo: yes
   with_items:
     - "{{ consul.ui_dir }}"
@@ -163,7 +163,7 @@
     src="../templates/nginx-consul.j2"
     dest="/etc/nginx/sites-available/consul"
     force=yes
-  when: "consul-servers' in {{ group_names }}"
+  when: "'consul-servers' in {{ group_names }}"
   sudo: yes
 
 - name: Enable Consul VHost
@@ -172,7 +172,7 @@
     dest="/etc/nginx/sites-enabled/consul"
     state=link
     force=yes
-  when: "consul-servers' in {{ group_names }}"
+  when: "'consul-servers' in {{ group_names }}"
   sudo: yes
 
 - name: Restart consul boostrap
