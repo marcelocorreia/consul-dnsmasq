@@ -44,6 +44,8 @@ $ consul keygen
 ## Role Variables
 
 ```yml
+consul_nginx_redir_by_hostname: "{{ consul_nginx_redir_by_hostname | default('true') }}"
+consul_nginx_port: "{{ consul_nginx_port | default('80') }}"
 consul_datacenter: central
 consul_uid: 1050
 consul_user: consul
