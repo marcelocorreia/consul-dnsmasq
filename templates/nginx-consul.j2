@@ -1,8 +1,6 @@
 server {
-  listen  {{ consul_nginx_port }};
-  {% if consul.nginx_redir_by_hostname %}
-  server_name {{consul.vhost_prefix }}.{{ inventory_hostname }};
-  {% endif %}
+  listen  80;
+  server_name consul.*;
 
   location / {
     proxy_pass                          http://127.0.0.1:8500/;
